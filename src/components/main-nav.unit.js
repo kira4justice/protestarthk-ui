@@ -1,7 +1,7 @@
-import MainNav from './main-nav'
+import MainNav from './main-nav';
 
 describe('@components/main-nav', () => {
   it('exports a valid component', () => {
-    expect(MainNav).toBeAComponent()
-  })
-})
+    expect(MainNav).toBeAComponent();
+  });
+});

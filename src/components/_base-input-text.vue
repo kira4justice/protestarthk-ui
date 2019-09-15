@@ -24,11 +24,11 @@ export default {
           'tel',
           'text',
           'url',
-        ].includes(value)
+        ].includes(value);
       },
     },
   },
-}
+};
 </script>
 
 <template>

@@ -1,10 +1,10 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import dispatchActionForAllModules from '@utils/dispatch-action-for-all-modules'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import dispatchActionForAllModules from '@utils/dispatch-action-for-all-modules';
 
-import modules from './modules'
+import modules from './modules';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const store = new Vuex.Store({
   modules,
@@ -12,10 +12,10 @@ const store = new Vuex.Store({
   // when mutating state outside of a mutation.
   // https://vuex.vuejs.org/guide/strict.html
   strict: process.env.NODE_ENV !== 'production',
-})
+});
 
-export default store
+export default store;
 
 // Automatically run the `init` action for every module,
 // if one exists.
-dispatchActionForAllModules('init')
+dispatchActionForAllModules('init');

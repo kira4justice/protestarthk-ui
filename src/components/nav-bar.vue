@@ -1,6 +1,6 @@
 <script>
-import { authComputed } from '@state/helpers'
-import NavBarRoutes from './nav-bar-routes'
+import { authComputed } from '@state/helpers';
+import NavBarRoutes from './nav-bar-routes';
 
 export default {
   components: { NavBarRoutes },
@@ -28,12 +28,12 @@ export default {
           title: 'Log in',
         },
       ],
-    }
+    };
   },
   computed: {
     ...authComputed,
   },
-}
+};
 </script>
 
 <template>

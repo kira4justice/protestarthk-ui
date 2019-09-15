@@ -1,5 +1,5 @@
 <script>
-import Layout from '@layouts/main'
+import Layout from '@layouts/main';
 
 export default {
   page: {
@@ -7,7 +7,7 @@ export default {
     meta: [{ name: 'description', content: 'Loading page...' }],
   },
   components: { Layout },
-}
+};
 </script>
 
 <template>

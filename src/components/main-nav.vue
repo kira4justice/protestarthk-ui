@@ -9,16 +9,16 @@ export default {
           { name: 'background', title: 'Background' },
           { name: 'arts', title: 'Protest Art' },
           { name: 'contacts', title: 'Contact' },
-        ]
+        ];
       },
     },
   },
   computed: {
     activeIndex() {
-      return this.$route.name
+      return this.$route.name;
     },
   },
-}
+};
 </script>
 
 <template>
