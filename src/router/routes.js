@@ -15,6 +15,38 @@ export default [
     path: '/arts',
     name: 'arts',
     component: () => lazyLoadView(import('@views/arts')),
+    meta: {
+      beforeResolve(routeTo, routeForm, next) {
+        store
+          .dispatch('arts/searchArts', routeTo.query)
+          .then((arts) => {
+            routeTo.params.arts = arts;
+            next();
+          })
+          .catch(() => {
+            next({ name: '404', params: { resource: 'Protest Arts' } });
+          });
+      },
+    },
+  },
+  {
+    path: '/arts/:id',
+    name: 'art-details',
+    component: () => lazyLoadView(import('@views/art-details')),
+    meta: {
+      beforeResolve(routeTo, routeFrom, next) {
+        store
+          .dispatch('arts/fetchArtDetails', routeTo.params.id)
+          .then((art) => {
+            routeTo.params.art = art;
+            next();
+          })
+          .catch(() => {
+            next({ name: '404', params: { resource: 'Protest Art' } });
+          });
+      },
+    },
+    // props: (route) => ({ art: store.state.arts.current || {} }),
   },
   {
     path: '/contacts',

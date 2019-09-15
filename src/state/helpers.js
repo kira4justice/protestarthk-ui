@@ -8,3 +8,13 @@ export const authComputed = {
 };
 
 export const authMethods = mapActions('auth', ['logIn', 'logOut']);
+
+export const artsComputed = {
+  ...mapState('arts', {
+    arts: (state) => state.arts,
+    currentPage: (state) => state.page,
+    currentArt: (state) => state.current,
+  }),
+};
+
+export const artsMethods = mapActions('arts', ['searchArts']);

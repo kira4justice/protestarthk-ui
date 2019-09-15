@@ -20,4 +20,12 @@
   // import design from '@design'
   //
   // console.log(design['global-grid-padding'])
+
+  /* stylelint-disable */
+  colorPrimary: $--color-primary;
+  sizeMenuWidth: $side-menu-width;
+  breakpointSM: strip-unit($--sm);
+  breakpointMD: strip-unit($--md);
+  breakpointLG: strip-unit($--lg);
+  breakpointXL: strip-unit($--xl);
 }
