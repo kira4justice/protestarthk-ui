@@ -1,18 +1,23 @@
 ---
 to: "src/router/layouts/<%= h.inflection.dasherize(name) %>.vue"
 ---
+<script>
+import MainNav from '@components/main-nav';
+
+export default {
+  components: { MainNav },
+};
+</script>
+
 <template>
-  <div :class="$style.container">
+  <el-container>
+    <el-header>
+      <MainNav />
+    </el-header>
     <slot />
-  </div>
+  </el-container>
 </template>
 
 <style lang="scss" module>
 @import '@design';
-
-.container {
-  min-width: $size-content-width-min;
-  max-width: $size-content-width-max;
-  margin: 0 auto;
-}
 </style>

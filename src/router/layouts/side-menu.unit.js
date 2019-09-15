@@ -1,10 +1,10 @@
-import MainLayout from './main'
+import SideMenuLayout from './side-menu'
 import '@plugins/element-ui'
 
-describe('@layouts/main', () => {
+describe('@layouts/side-menu', () => {
   it('renders its content', () => {
     const slotContent = '<p>Hello!</p>'
-    const { element } = shallowMount(MainLayout, {
+    const { element } = shallowMount(SideMenuLayout, {
       slots: {
         default: slotContent,
       },

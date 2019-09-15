@@ -1,4 +1,5 @@
 import Home from './home'
+import '@plugins/element-ui'
 
 describe('@views/home', () => {
   it('is a valid view', () => {
@@ -6,7 +7,8 @@ describe('@views/home', () => {
   })
 
   it('renders an element', () => {
-    const { element } = shallowMountView(Home)
-    expect(element.textContent).toContain('Home Page')
+    const wrapper = shallowMountView(Home)
+    const element = wrapper.find('.no-padding')
+    expect(element.exists()).toBe(true)
   })
 })

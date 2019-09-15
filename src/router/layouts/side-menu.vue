@@ -11,7 +11,10 @@ export default {
     <el-header>
       <MainNav />
     </el-header>
-    <slot />
+    <el-container>
+      <el-aside>hi</el-aside>
+      <slot />
+    </el-container>
   </el-container>
 </template>
 

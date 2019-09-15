@@ -7,6 +7,8 @@ import NProgress from 'nprogress/nprogress'
 import store from '@state/store'
 import routes from './routes'
 
+NProgress.configure({ showSpinner: false })
+
 Vue.use(VueRouter)
 Vue.use(VueMeta, {
   // The component option name that vue-meta looks for meta info on.

@@ -5,6 +5,7 @@ to: "src/router/layouts/<%= h.inflection.dasherize(name) %>.unit.js"
   const fileName = h.inflection.dasherize(name)
   const importName = h.inflection.camelize(fileName.replace(/-/g, '_')) + 'Layout'
 %>import <%= importName %> from './<%= fileName %>'
+import '@plugins/element-ui';
 
 describe('@layouts/<%= fileName %>', () => {
   it('renders its content', () => {

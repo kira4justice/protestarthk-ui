@@ -7,6 +7,21 @@ export default [
     component: () => lazyLoadView(import('@views/home')),
   },
   {
+    path: '/background',
+    name: 'background',
+    component: () => lazyLoadView(import('@views/background')),
+  },
+  {
+    path: '/arts',
+    name: 'arts',
+    component: () => lazyLoadView(import('@views/arts')),
+  },
+  {
+    path: '/contacts',
+    name: 'contacts',
+    component: () => lazyLoadView(import('@views/contacts')),
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => lazyLoadView(import('@views/login')),

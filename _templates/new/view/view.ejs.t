@@ -18,7 +18,9 @@ export default {
 
 <template>
   <Layout>
-    <%= h.inflection.titleize(name.replace(/-/g, '_')) %>
+    <el-main>
+      <%= h.inflection.titleize(name.replace(/-/g, '_')) %>
+    </el-main>
   </Layout>
 </template>
 <%
