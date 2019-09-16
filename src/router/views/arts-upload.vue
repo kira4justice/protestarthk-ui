@@ -3,8 +3,8 @@ import Layout from '@layouts/main';
 
 export default {
   page: {
-    title: 'Background',
-    meta: [{ name: 'description', content: 'Background' }],
+    title: 'ArtsUpload',
+    meta: [{ name: 'description', content: 'ArtsUpload' }],
   },
   components: { Layout },
 };
@@ -13,7 +13,7 @@ export default {
 <template>
   <Layout>
     <el-main>
-      Background
+      Arts Upload
     </el-main>
   </Layout>
 </template>

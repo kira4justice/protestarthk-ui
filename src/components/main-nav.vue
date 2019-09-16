@@ -6,8 +6,8 @@ export default {
       default() {
         return [
           { name: 'home', title: 'Front Page' },
-          { name: 'background', title: 'Background' },
           { name: 'arts', title: 'Protest Art' },
+          { name: 'arts-upload', title: 'Upload' },
           { name: 'contacts', title: 'Contact' },
         ];
       },

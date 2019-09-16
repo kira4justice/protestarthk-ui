@@ -7,11 +7,6 @@ export default [
     component: () => lazyLoadView(import('@views/home')),
   },
   {
-    path: '/background',
-    name: 'background',
-    component: () => lazyLoadView(import('@views/background')),
-  },
-  {
     path: '/arts',
     name: 'arts',
     component: () => lazyLoadView(import('@views/arts')),
@@ -47,6 +42,11 @@ export default [
       },
     },
     // props: (route) => ({ art: store.state.arts.current || {} }),
+  },
+  {
+    path: '/arts/upload',
+    name: 'arts-upload',
+    component: () => lazyLoadView(import('@views/arts-upload')),
   },
   {
     path: '/contacts',
