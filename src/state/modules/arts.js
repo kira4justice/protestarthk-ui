@@ -37,50 +37,16 @@ export const actions = {
 
     // TODO: call api
     await delay(1000);
-    const ret = [
-      {
-        id: '01',
-        title: '01',
-        src: '/images/arts/01.jpg',
+    const ret = R.range(1, 12).map((d) => {
+      let id = `0${d}`;
+      id = id.substr(id.length - 2);
+      return {
+        id,
+        title: `Protest Art ${id}`,
+        src: `/images/arts/${id}.jpg`,
         tags: ['831', 'hk'],
-      },
-      {
-        id: '02',
-        title: '02',
-        src: '/images/arts/02.jpg',
-        tags: ['831', 'hk'],
-      },
-      {
-        id: '03',
-        title: '03',
-        src: '/images/arts/03.jpg',
-        tags: ['831', 'hk'],
-      },
-      {
-        id: '04',
-        title: '04',
-        src: '/images/arts/04.jpg',
-        tags: ['831', 'hk'],
-      },
-      {
-        id: '05',
-        title: '05',
-        src: '/images/arts/05.jpg',
-        tags: ['831', 'hk'],
-      },
-      {
-        id: '06',
-        title: '06',
-        src: '/images/arts/06.jpg',
-        tags: ['831', 'hk'],
-      },
-      {
-        id: '07',
-        title: '07',
-        src: '/images/arts/07.jpg',
-        tags: ['831', 'hk'],
-      },
-    ];
+      };
+    });
 
     if (page === 0) {
       commit(SET_ARTS, ret);
