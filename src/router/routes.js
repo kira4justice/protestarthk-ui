@@ -1,10 +1,59 @@
-import store from '@state/store'
+import store from '@state/store';
 
 export default [
   {
     path: '/',
     name: 'home',
     component: () => lazyLoadView(import('@views/home')),
+  },
+  {
+    path: '/arts',
+    name: 'arts',
+    component: () => lazyLoadView(import('@views/arts')),
+    meta: {
+      beforeResolve(routeTo, routeForm, next) {
+        store.dispatch('arts/init');
+
+        store
+          .dispatch('arts/searchArts', routeTo.query)
+          .then((arts) => {
+            routeTo.params.arts = arts;
+            next();
+          })
+          .catch(() => {
+            next({ name: '404', params: { resource: 'Protest Arts' } });
+          });
+      },
+    },
+  },
+  {
+    path: '/arts/:id',
+    name: 'art-details',
+    component: () => lazyLoadView(import('@views/art-details')),
+    meta: {
+      beforeResolve(routeTo, routeFrom, next) {
+        store
+          .dispatch('arts/fetchArtDetails', routeTo.params.id)
+          .then((art) => {
+            routeTo.params.art = art;
+            next();
+          })
+          .catch(() => {
+            next({ name: '404', params: { resource: 'Protest Art' } });
+          });
+      },
+    },
+    // props: (route) => ({ art: store.state.arts.current || {} }),
+  },
+  {
+    path: '/arts/upload',
+    name: 'arts-upload',
+    component: () => lazyLoadView(import('@views/arts-upload')),
+  },
+  {
+    path: '/contacts',
+    name: 'contacts',
+    component: () => lazyLoadView(import('@views/contacts')),
   },
   {
     path: '/login',
@@ -15,10 +64,10 @@ export default [
         // If the user is already logged in
         if (store.getters['auth/loggedIn']) {
           // Redirect to the home page instead
-          next({ name: 'home' })
+          next({ name: 'home' });
         } else {
           // Continue to the login page
-          next()
+          next();
         }
       },
     },
@@ -45,15 +94,15 @@ export default [
           .then((user) => {
             // Add the user to the route params, so that it can
             // be provided as a prop for the view component below.
-            routeTo.params.user = user
+            routeTo.params.user = user;
             // Continue to the route.
-            next()
+            next();
           })
           .catch(() => {
             // If a user with the provided username could not be
             // found, redirect to the 404 page.
-            next({ name: '404', params: { resource: 'User' } })
-          })
+            next({ name: '404', params: { resource: 'User' } });
+          });
       },
     },
     // Set the user from the route params, once it's set in the
@@ -66,12 +115,12 @@ export default [
     meta: {
       authRequired: true,
       beforeResolve(routeTo, routeFrom, next) {
-        store.dispatch('auth/logOut')
+        store.dispatch('auth/logOut');
         const authRequiredOnPreviousRoute = routeFrom.matched.some(
           (route) => route.meta.authRequired
-        )
+        );
         // Navigate back to previous page, or home as a fallback
-        next(authRequiredOnPreviousRoute ? { name: 'home' } : { ...routeFrom })
+        next(authRequiredOnPreviousRoute ? { name: 'home' } : { ...routeFrom });
       },
     },
   },
@@ -90,7 +139,7 @@ export default [
     path: '*',
     redirect: '404',
   },
-]
+];
 
 // Lazy-loads view components, but with better UX. A loading view
 // will be used if the component takes a while to load, falling
@@ -120,14 +169,14 @@ function lazyLoadView(AsyncView) {
     // Time before giving up trying to load the component.
     // Default: Infinity (milliseconds).
     timeout: 10000,
-  })
+  });
 
   return Promise.resolve({
     functional: true,
     render(h, { data, children }) {
       // Transparently pass any props or children
       // to the view component.
-      return h(AsyncHandler, data, children)
+      return h(AsyncHandler, data, children);
     },
-  })
+  });
 }

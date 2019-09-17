@@ -1,4 +1,4 @@
-const appConfig = require('./src/app.config')
+const appConfig = require('./src/app.config');
 
 /** @type import('@vue/cli-service').ProjectOptions */
 module.exports = {
@@ -32,4 +32,4 @@ module.exports = {
       : // Proxy API endpoints a local mock API.
         { before: require('./tests/mock-api') }),
   },
-}
+};

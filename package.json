@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "protestarthk-ui",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -34,10 +34,15 @@
     "@fortawesome/free-solid-svg-icons": "5.8.1",
     "@fortawesome/vue-fontawesome": "0.1.6",
     "axios": "0.18.0",
+    "delay": "^4.3.0",
+    "element-ui": "^2.3.6",
+    "humps": "^2.0.1",
     "lodash": "4.17.11",
     "normalize.css": "8.0.1",
     "nprogress": "0.2.0",
+    "ramda": "^0.26.1",
     "vue": "2.6.10",
+    "vue-masonry-css": "^1.0.3",
     "vue-meta": "1.6.0",
     "vue-router": "3.0.6",
     "vuex": "3.1.0"
@@ -71,6 +76,7 @@
     "stylelint-config-recess-order": "2.0.x",
     "stylelint-config-standard": "18.3.x",
     "stylelint-scss": "3.6.x",
+    "vue-cli-plugin-element-ui": "^1.1.4",
     "vue-template-compiler": "2.6.10",
     "vuepress": "0.14.x"
   },

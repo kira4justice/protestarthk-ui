@@ -51,5 +51,5 @@ module.exports = (on, config) => {
     videoCompression: 32,
     videosFolder: 'tests/e2e/videos',
     screenshotsFolder: 'tests/e2e/screenshots',
-  })
-}
+  });
+};

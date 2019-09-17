@@ -18,11 +18,11 @@ You might be thinking, "Why not just automatically inject all of these into ever
 Here's an example:
 
 ```js
-import { authComputed } from '@state/helpers'
+import { authComputed } from '@state/helpers';
 
 export default {
   computed: {
     ...authComputed,
   },
-}
+};
 ```

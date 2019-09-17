@@ -1,15 +1,15 @@
 <script>
-import appConfig from '@src/app.config'
+import appConfig from '@src/app.config';
 
 export default {
   page: {
     // All subcomponent titles will be injected into this template.
     titleTemplate(title) {
-      title = typeof title === 'function' ? title(this.$store) : title
-      return title ? `${title} | ${appConfig.title}` : appConfig.title
+      title = typeof title === 'function' ? title(this.$store) : title;
+      return title ? `${title} | ${appConfig.title}` : appConfig.title;
     },
   },
-}
+};
 </script>
 
 <template>
@@ -37,54 +37,36 @@ export default {
 // Design variables and utilities from src/design.
 @import '@design';
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-body {
-  background: $color-body-bg;
-}
 #app {
-  @extend %typography-small;
+  font-family: $system-default-font-family;
 }
 
 // ===
 // Base element styles
 // ===
-
-a,
-a:visited {
-  color: $color-link-text;
-}
-
 h1 {
-  @extend %typography-xxlarge;
+  @include _h($--font-size-extra-large);
 }
-
 h2 {
-  @extend %typography-xlarge;
+  @include _h($--font-size-large);
 }
-
 h3 {
-  @extend %typography-large;
+  @include _h($--font-size-medium);
 }
-
 h4 {
-  @extend %typography-medium;
+  @include _h($--font-size-base);
 }
-
-h5,
+h5 {
+  @include _h($--font-size-small);
+}
 h6 {
-  @extend %typography-small;
+  @include _h($--font-size-extra-small);
 }
 
 // ===
 // Vendor
 // ===
-
 #nprogress .bar {
-  background: $color-link-text;
+  background: $--color-primary;
 }
 </style>

@@ -1,6 +1,6 @@
 <script>
 // Allows stubbing BaseLink in unit tests
-const BaseLink = 'BaseLink'
+const BaseLink = 'BaseLink';
 
 export default {
   // Functional components are stateless, meaning they can't
@@ -16,7 +16,7 @@ export default {
   // Render functions are an alternative to templates
   render(h, { props, $style = {} }) {
     function getRouteTitle(route) {
-      return typeof route.title === 'function' ? route.title() : route.title
+      return typeof route.title === 'function' ? route.title() : route.title;
     }
 
     // Functional components are the only components allowed
@@ -31,18 +31,18 @@ export default {
       >
         <a>{getRouteTitle(route)}</a>
       </BaseLink>
-    ))
+    ));
   },
-}
+};
 </script>
 
 <style lang="scss" module>
 @import '@design';
 
-.active a {
-  font-weight: 600;
-  color: $color-link-text-active;
-  text-decoration: none;
-  cursor: default;
-}
+// .active a {
+//   font-weight: 600;
+//   color: $color-link-text-active;
+//   text-decoration: none;
+//   cursor: default;
+// }
 </style>

@@ -1,24 +1,39 @@
 <script>
-import NavBar from '@components/nav-bar'
+import MainNav from '@components/main-nav';
 
 export default {
-  components: { NavBar },
-}
+  components: { MainNav },
+  props: {
+    showBrand: Boolean,
+  },
+};
 </script>
 
 <template>
-  <div :class="$style.container">
-    <NavBar />
+  <el-container>
+    <el-header>
+      <div v-if="showBrand" :class="['hidden-xs-only', $style.brand]"
+        >Protest Art</div
+      >
+      <MainNav />
+    </el-header>
     <slot />
-  </div>
+  </el-container>
 </template>
 
 <style lang="scss" module>
 @import '@design';
 
-.container {
-  min-width: $size-content-width-min;
-  max-width: $size-content-width-max;
-  margin: 0 auto;
+.brand {
+  @extend .bold;
+
+  float: left;
+  height: 60px;
+  line-height: 60px;
+  text-transform: uppercase;
+
+  @include mq(lg-and-up) {
+    padding-left: $side-menu-width;
+  }
 }
 </style>

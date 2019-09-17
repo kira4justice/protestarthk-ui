@@ -1,76 +1,100 @@
-# Vue Enterprise Boilerplate
+# Protest Art HK (UI)
 
-[![CircleCI](https://circleci.com/gh/chrisvfritz/vue-enterprise-boilerplate/tree/master.svg?style=svg)](https://circleci.com/gh/chrisvfritz/vue-enterprise-boilerplate/tree/master)
+The frontend repository of the Protest Art HK platform. The basic file structure is cloning from [Vue Enterprise Boilerplate](https://github.com/chrisvfritz/vue-enterprise-boilerplate). For the details of file structure and project architecture, please refer to the [docs folder](./docs/index.md)
 
-> This is an ever-evolving, very opinionated architecture and dev environment for new Vue SPA projects using [Vue CLI 3](https://github.com/vuejs/vue-cli). Questions, feedback, and for now, even bikeshedding are welcome. 😄 If you'd like to increase the time I can spend on this project, as well as other Vue resources, **please consider becoming a [sponsor on Patreon](https://www.patreon.com/chrisvuefritz)**. :pray:
+## Prerequisite
 
-## Features
+- [NodeJS](https://nodejs.org/en/) stable version (v12.x)
+- [Yarn](https://yarnpkg.com/lang/en/docs/install/) stable version (v1.x)
 
-- [**Thorough documentation**](#documentation): Written with the same care as Vue's core docs to quickly train new team members and consolidate knowledge.
-- [**Guaranteed consistency**](docs/linting.md): Opinionated linting for Vue, JavaScript/JSON, SCSS, and Markdown, integrated into Visual Studio Code and run against staged files on pre-commit.
-- [**First-class tests**](docs/tests.md): Practice test-driven development with both unit and end-to-end tests. Unit tests with Jest live as first-class citizens alongside your source files, while Cypress provides reliable end-to-end tests in an intuitive GUI for development.
-- [**Speedy development**](docs/development.md): Between [configurable generators](docs/development.md#generators), [handy aliases](docs/development.md#aliases), and [global base components](docs/development.md#base-components), your productivity will skyrocket.
-
-## Getting started
+## Install Dependencies
 
 ```bash
-# 1. Clone the repository.
-git clone https://github.com/chrisvfritz/vue-enterprise-boilerplate.git my-new-project
-
-# 2. Enter your newly-cloned folder.
-cd my-new-project
-
-# 3. Install dependencies. Make sure yarn is installed: https://yarnpkg.com/lang/en/docs/install
-yarn
-
-# 4. Replace this README's CI badge with a note about when you started
-# and a link to a compare URL, so that you can always get an overview
-# of new features added to the boilerplate since you cloned.
-node _start.js
-
-# 5. Delete the start script, as there can be only one beginning.
-rm _start.js
-
-# 6. Read the documentation linked below for "Setup and development".
+# Install NodeJS dependencies listed in package.json
+yarn install
 ```
 
-## Documentation
+## Start Dev Server
 
-This project includes a `docs` folder with more details on:
+```bash
+# Launch the dev server
+yarn dev
 
-1.  [Setup and development](docs/development.md)
-1.  [Architecture](docs/architecture.md)
-1.  [Languages and technologies](docs/tech.md)
-1.  [Routing, layouts, and views](docs/routing.md)
-1.  [State management](docs/state.md)
-1.  [Tests and mocking the API](docs/tests.md)
-1.  [Linting and formatting](docs/linting.md)
-1.  [Editor integration](docs/editors.md)
-1.  [Building and deploying to production](docs/production.md)
-1.  [Troubleshooting](docs/troubleshooting.md)
+# Launch the dev server and automatically open it in
+# your default browser when ready
+yarn dev --open
 
-## FAQ
+# Launch the dev server with the Cypress client for
+# test-driven development in a friendly interface
+yarn dev:e2e
+```
 
-**Why would I use this boilerplate instead of generating a new project with [Vue CLI](https://github.com/vuejs/vue-cli) directly?**
+By default, dev and tests filter requests through the [mock API](./docs/tests.md#the-mock-api) in `tests/mock-api`. To test directly against a local/live API instead, run dev and test commands with the `API_BASE_URL` environment variable set. For example:
 
-Vue CLI aims for flexibility, making it as simple as possible for any team to set up a new project, no matter how big or small, whether it's an app or a library, or what languages and technologies are being used.
+```bash
+# To develop against a local backend server
+API_BASE_URL=http://localhost:3000 yarn dev
 
-This boilerplate makes more assumptions. It assumes you're building a large app, possibly developed by a large team. It also makes a lot of default choices for you, based on what tends to work well for large, enterprise projects. At the same time, it aims to educate and empower users to configure these defaults to ideally suit their specific app and team.
+# To test and develop against a production server
+API_BASE_URL=https://example.io yarn dev:e2e
+```
 
-**Why would I use this boilerplate instead of [Nuxt](https://nuxtjs.org/)?**
+## Production Build
 
-Nuxt is like a really smart personal assistant, immediately making you more productive by taking care of many concerns _for you_. This boilerplate is more of a personal coach, aiming to educate and empower users to essentially configure their _own_ framework, ideally suited to their app and team.
+```bash
+# Build for production with minification
+yarn build
+```
 
-If what you're building is very well-defined, with requirements and technical challenges that won't drastically change over time, I'd probably recommend Nuxt instead. For the needs of common applications, it's more than up to the task. If you're a startup trying to prove product-market fit and your primary goal is initial development speed, that's also a point in Nuxt's favor.
+This results in your compiled application in a `dist` directory.
 
-Here's when you might prefer building a project off the boilerplate instead:
+## Technical Stack
 
-- The requirements for the product are very likely to change over time and you want to maintain maximum flexibility and control.
-- You'd like to focus on developing skills that will transfer across _any_ Vue project.
-- You're working in a large team, so need tooling to help everyone avoid common mistakes, write in a consistent style, and avoid bikeshedding in PRs.
+- [Vue](https://vuejs.org/) (MVC Framework)
+- [Vuex](https://vuex.vuejs.org/) (State management, similar to Redux)
+- [Element](https://element.eleme.io/#/en-US) (UI Framework, similar to Bootstrap)
 
-Finally, it's not an either-or situation. This boilerplate demonstrates many useful patterns for building robust applications that can also be applied to Nuxt apps. That means you could build a project with Nuxt, while still using this boilerplate as a study guide.
+## Generators
 
-**Can you build a Nuxt version of this boilerplate?**
+```bash
+# Generate a new component with adjacent unit test
+# Component is those reuseable element, eg. <CustomButton/>, <Menu/>, <ArtThumbnail/>, etc.
+# It is located at `src/components`.
+# All components which the name start with `_` will be auto global registered
+yarn new component
 
-I might! I'll be focusing on this Vue CLI version for now, but once I've made most of the improvements on my roadmap and as time allows, I _would_ like to start work on a Nuxt version. The Nuxt team has even generously offered to help!
+# Generate a new view component with adjacent unit test
+# You can treat as page, eg. <Home/>, <About/>, <Upload/>, etc.
+# It is located at `src/router/views`.
+yarn new view
+
+# Generate a new layout component with adjacent unit test
+# You can make layout like, <WithMainMenu/>, <WithSideBar/>, etc
+# It is located at `src/router/layouts`.
+yarn new layout
+
+# Generate a new Vuex module with adjacent unit test
+# Which is the namespaced client side datastore
+# It is located at `src/state/modules`.
+yarn new module
+
+# Generate a new utility function with adjacent unit test
+# It is located at `src/utils`.
+yarn new util
+
+# Generate a new end-to-end spec
+# It is located at `tests/e2e/specs`.
+yarn new e2e
+```
+
+## Style & CSS
+
+For component based style, you can directly write CSS/SCSS in side the `.vue` file. For some global CSS settings, please modify the `.scss` files in `/src/design` folder. Usually you would like to declare SCSS variable and help class there.
+
+## Static files
+
+If you have any static files which don't want to package through webpack, please place it in `/public` folder.
+
+## More
+
+If you still have any question about the architecture, please refer to the [Vue Enterprise Boilerplate](./docs/index.md).

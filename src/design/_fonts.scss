@@ -1,21 +1,31 @@
 $system-default-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
-  Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-  'Segoe UI Symbol';
+  Helvetica, 'Microsoft YaHei', '微軟雅黑', Arial, sans-serif,
+  'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
-$heading-font-family: $system-default-font-family;
-$heading-font-weight: 600;
+$--font-size-extra-large: 2em !default;
+$--font-size-large: 1.5em !default;
+$--font-size-medium: 1.17em !default;
+$--font-size-base: 1em !default;
+$--font-size-small: 0.83em !default;
+$--font-size-extra-small: 0.67em !default;
 
-$content-font-family: $system-default-font-family;
-$content-font-weight: 400;
+$--font-weight-primary: 500 !default;
+$--font-weight-secondary: 100 !default;
 
-%font-heading {
-  font-family: $heading-font-family;
-  font-weight: $heading-font-weight;
-  color: $color-heading-text;
-}
+// $heading-font-family: $system-default-font-family;
+// $heading-font-weight: 600;
 
-%font-content {
-  font-family: $content-font-family;
-  font-weight: $content-font-weight;
-  color: $color-text;
-}
+// $content-font-family: $system-default-font-family;
+// $content-font-weight: 400;
+
+// %font-heading {
+//   font-family: $heading-font-family;
+//   font-weight: $heading-font-weight;
+//   color: $color-heading-text;
+// }
+
+// %font-content {
+//   font-family: $content-font-family;
+//   font-weight: $content-font-weight;
+//   color: $color-text;
+// }
