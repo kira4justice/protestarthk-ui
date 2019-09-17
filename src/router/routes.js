@@ -12,6 +12,8 @@ export default [
     component: () => lazyLoadView(import('@views/arts')),
     meta: {
       beforeResolve(routeTo, routeForm, next) {
+        store.dispatch('arts/init');
+
         store
           .dispatch('arts/searchArts', routeTo.query)
           .then((arts) => {

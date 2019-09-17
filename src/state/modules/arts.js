@@ -1,27 +1,35 @@
-import delay from 'delay';
-import * as R from 'ramda';
+import { mergeState } from '@utils/store-utils';
+import { camelizeKeys } from 'humps';
+import { propOr } from 'ramda';
+import axios from 'axios';
 
+const INIT_ARTS = 'INIT_ARTS';
 const SET_ARTS = 'SET_ARTS';
 const APPEND_ARTS = 'APPEND_ARTS';
 const CLEAR_CURRENT = 'CLEAR_CURRENT';
 const SET_CURRENT = 'SET_CURRENT';
 
-export const state = {
+const defaultData = () => ({
   arts: [],
   page: 0,
-  current: null,
-};
+  current: {},
+});
+
+export const state = defaultData();
 
 export const getters = {};
 
 export const mutations = {
+  [INIT_ARTS]: (state) => {
+    mergeState(state, defaultData());
+  },
   [SET_ARTS]: (state, newArts) => {
     state.arts = newArts;
     state.page = 0;
   },
   [APPEND_ARTS]: (state, newArts) => {
     state.arts = state.arts.concat(newArts);
-    state.page++;
+    if (newArts.length > 0) state.page++;
   },
   [CLEAR_CURRENT]: (state) => {
     state.current = null;
@@ -32,21 +40,18 @@ export const mutations = {
 };
 
 export const actions = {
-  async searchArts({ commit }, query) {
-    const page = R.propOr(0, 'page')(query);
+  init({ commit }) {
+    commit(INIT_ARTS);
+  },
+  async searchArts({ commit, state }, payload) {
+    const { query, tag } = payload;
+    const page = propOr(state.page, 'page')(payload);
+    let tags = tag || [];
+    tags = tags instanceof Array ? tags : [tags];
 
-    // TODO: call api
-    await delay(1000);
-    const ret = R.range(1, 12).map((d) => {
-      let id = `0${d}`;
-      id = id.substr(id.length - 2);
-      return {
-        id,
-        title: `Protest Art ${id}`,
-        src: `/images/arts/${id}.jpg`,
-        tags: ['831', 'hk'],
-      };
-    });
+    const params = { tags, query, page };
+    const res = await axios.get('/api/arts', { params });
+    const ret = camelizeKeys(res.data);
 
     if (page === 0) {
       commit(SET_ARTS, ret);
@@ -59,17 +64,8 @@ export const actions = {
   async fetchArtDetails({ commit }, id) {
     commit(CLEAR_CURRENT);
 
-    // TODO: call api
-    await delay(1000);
-    const ret = {
-      id,
-      title: 'Protest Art Name',
-      artist: 'Artist Name',
-      desc:
-        'Some description about the protest art. ‘Our goal isn’t to challenge the Communist Party, just to defend our own rights and autonomy,’ says man behind the iconic bloodstained bauhinia flag that became the symbol of the 2019 Hong Kong protests.',
-      src: `/images/arts/${id}.jpg`,
-      tags: ['831', 'hk'],
-    };
+    const res = await axios.get(`/api/arts/${id}`);
+    const ret = camelizeKeys(res.data);
 
     commit(SET_CURRENT, ret);
     return ret;

@@ -17,4 +17,4 @@ export const artsComputed = {
   }),
 };
 
-export const artsMethods = mapActions('arts', ['searchArts']);
+export const artsMethods = mapActions('arts', ['init', 'searchArts']);

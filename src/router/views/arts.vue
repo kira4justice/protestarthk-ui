@@ -140,7 +140,7 @@ export default {
         <masonry :cols="masonryCols" :gutter="masonryGutter">
           <RouterLink v-for="art in arts" :key="art.id" :to="`/arts/${art.id}`">
             <el-card :class="$style['art-item']" :body-style="{ padding: 0 }">
-              <img :src="art.src" />
+              <img :src="art.fileUrl" />
             </el-card>
           </RouterLink>
         </masonry>

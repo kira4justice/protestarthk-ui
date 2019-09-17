@@ -23,26 +23,26 @@ export default {
           :sm="{ span: 11 }"
           :lg="{ span: 11, offset: 0 }"
         >
-          <img :class="$style.image" :src="currentArt.src" />
+          <img :class="$style.image" :src="currentArt.fileUrl" />
         </el-col>
         <el-col :sm="{ span: 12, offset: 1 }" :lg="{ span: 11, offset: 2 }">
           <div :class="$style.details">
-            <div :class="$style.title">{{ currentArt.title }}</div>
-            <div :class="$style.artist">By {{ currentArt.artist }}</div>
+            <div :class="$style.title">{{ currentArt.name }}</div>
+            <div :class="$style.artist">By {{ currentArt.author }}</div>
             <div :class="$style.label">Description</div>
-            <p :class="$style.desc">{{ currentArt.desc }}</p>
+            <p :class="$style.desc">{{ currentArt.caption }}</p>
             <div :class="$style.label">Tag</div>
             <RouterLink
               v-for="tag in currentArt.tags"
-              :key="tag"
+              :key="tag.id"
               :class="$style.tag"
-              :to="`/arts?tag=${tag}`"
-              >#{{ tag }}</RouterLink
+              :to="`/arts?tag=${tag.name}`"
+              >#{{ tag.name }}</RouterLink
             >
           </div>
         </el-col>
         <el-col class="hidden-sm-and-up">
-          <img :class="$style.image" :src="currentArt.src" />
+          <img :class="$style.image" :src="currentArt.fileUrl" />
         </el-col>
       </el-row>
     </el-main>
