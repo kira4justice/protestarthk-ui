@@ -1,6 +1,6 @@
-import ArtsUpload from './arts-upload';
+import ArtsUpload from './arts-submit';
 
-describe('@views/arts-upload', () => {
+describe('@views/arts-submit', () => {
   it('is a valid view', () => {
     expect(ArtsUpload).toBeAViewComponent();
   });

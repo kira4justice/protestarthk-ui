@@ -1,16 +1,25 @@
 <script>
+import design from '@design';
+
 export default {
   props: {
+    background: {
+      type: String,
+      default: () => design.colorBodyBg,
+    },
+    color: {
+      type: String,
+      default: () => design.colorText,
+    },
     routes: {
       type: Array,
-      default() {
-        return [
-          { name: 'home', title: 'Front Page' },
-          { name: 'arts', title: 'Protest Art' },
-          { name: 'arts-upload', title: 'Upload' },
-          { name: 'contacts', title: 'Contact' },
-        ];
-      },
+      default: () => [
+        { name: 'home', title: 'Home' },
+        { name: 'about', title: 'About' },
+        { name: 'arts', title: 'Gallery' },
+        { name: 'arts-submit', title: 'Submit' },
+        { name: 'contacts', title: 'Contact' },
+      ],
     },
   },
   computed: {
@@ -26,6 +35,9 @@ export default {
     mode="horizontal"
     :class="$style['menu']"
     :default-active="activeIndex"
+    :background-color="background"
+    :text-color="color"
+    :active-text-color="color"
     router
   >
     <el-menu-item

@@ -1,0 +1,51 @@
+@import 'layers';
+@import 'colors';
+@import 'sizes';
+
+// stylelint-disable-next-line selector-max-type
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+}
+
+#viewport {
+  width: 100%;
+  min-height: 100%;
+}
+
+.container {
+  width: 100%;
+  max-width: $container-xs-width;
+  margin-right: auto;
+  margin-left: auto;
+
+  @include mq(sm-and-up) {
+    max-width: $container-sm-width;
+  }
+
+  @include mq(md-and-up) {
+    max-width: $container-md-width;
+  }
+
+  @include mq(lg-and-up) {
+    max-width: $container-lg-width;
+  }
+
+  @include mq(xl-only) {
+    max-width: $container-xl-width;
+  }
+}
+
+// stylelint-disable-next-line selector-class-pattern
+.el-header--fixed {
+  position: fixed;
+  z-index: $layer-page-z-index;
+  width: 100%;
+
+  // stylelint-disable-next-line selector-class-pattern
+  + .el-main {
+    margin-top: $header-height;
+  }
+}

@@ -5,6 +5,7 @@
 @import 'sizes';
 @import 'typography';
 @import 'utils';
+@import 'layouts';
 
 :export {
   // Any values that need to be accessible from JavaScript
@@ -22,7 +23,10 @@
   // console.log(design['global-grid-padding'])
 
   /* stylelint-disable */
-  colorPrimary: $--color-primary;
+  colorBodyBg: $color-body-bg;
+  colorPrimary: $color-primary;
+  colorText: $color-text;
+  headerHeight: $header-height;
   sizeMenuWidth: $side-menu-width;
   breakpointSM: strip-unit($--sm);
   breakpointMD: strip-unit($--md);

@@ -3,8 +3,8 @@ import Layout from '@layouts/main';
 
 export default {
   page: {
-    title: 'ArtsUpload',
-    meta: [{ name: 'description', content: 'ArtsUpload' }],
+    title: 'ArtsSubmit',
+    meta: [{ name: 'description', content: 'ArtsSubmit' }],
   },
   components: { Layout },
 };

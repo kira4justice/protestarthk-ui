@@ -1,8 +1,11 @@
+// $--background-color-base: #f5f7fa;
+$--background-color-base: white;
 $--color-primary: #fbb145;
 
 // CONTENT
-// $color-body-bg: #f9f7f5;
-// $color-text: #444;
+$color-body-bg: $--background-color-base;
+$color-primary: $--color-primary;
+$color-text: #000;
 // $color-heading-text: #35495e;
 
 // LINKS

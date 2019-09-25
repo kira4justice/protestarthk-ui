@@ -4,6 +4,7 @@ $--header-padding: 0 $padding-base;
 $--footer-padding: 0 $padding-base;
 $--main-padding: 0 $padding-base;
 
+$header-height: 60px;
 $side-menu-width: 280px;
 
 // BUTTONS
@@ -14,6 +15,12 @@ $--sm: 768px;
 $--md: 992px;
 $--lg: 1200px;
 $--xl: 1920px;
+
+$container-xs-width: 576px;
+$container-sm-width: 720px;
+$container-md-width: 960px;
+$container-lg-width: 1140px;
+$container-xl-width: 1800px;
 
 $--breakpoints-spec: (
   'xs-only': '(max-width: #{$--sm - 1})',

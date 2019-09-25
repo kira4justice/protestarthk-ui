@@ -82,7 +82,8 @@ export default {
     onScroll(event) {
       const d = document.documentElement;
       const offset = d.scrollTop + window.innerHeight;
-      const height = d.offsetHeight;
+      const v = document.getElementById('viewport') || d;
+      const height = v.offsetHeight;
 
       if (height - offset < 400) {
         this.fetchNextPage();
@@ -93,7 +94,7 @@ export default {
 </script>
 
 <template>
-  <Layout>
+  <Layout yellow-bg white-card title="Search">
     <el-container>
       <el-aside class="hidden-xs-only" :width="sizeMenuWidth">
         <el-menu

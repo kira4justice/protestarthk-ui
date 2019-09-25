@@ -3,17 +3,17 @@ import Layout from '@layouts/main';
 
 export default {
   page: {
-    title: 'Contacts',
-    meta: [{ name: 'description', content: 'Contacts' }],
+    title: 'About',
+    meta: [{ name: 'description', content: 'About' }],
   },
   components: { Layout },
 };
 </script>
 
 <template>
-  <Layout title="Contact Us" black-card>
+  <Layout yellow-card title="About">
     <el-main>
-      Contacts
+      About
     </el-main>
   </Layout>
 </template>
