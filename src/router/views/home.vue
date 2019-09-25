@@ -1,6 +1,6 @@
 <script>
 import appConfig from '@src/app.config';
-import Layout from '@layouts/main';
+import Layout from '@layouts/home';
 
 export default {
   page: {
@@ -28,6 +28,8 @@ export default {
 <style lang="scss" module>
 @import '@design';
 
+$caption-color: rgba(0, 0, 0, 0.8);
+
 .title {
   @extend .bold;
 
@@ -37,6 +39,7 @@ export default {
 
     display: none;
     font-size: 1em;
+    color: $caption-color;
     text-transform: uppercase;
 
     @include mq(sm-only) {
@@ -77,9 +80,9 @@ export default {
   bottom: 25%;
   display: block;
   padding: 0.75em 1.5em;
-  color: white;
+  color: $color-body-bg;
   text-transform: uppercase;
-  background: black;
+  background: $caption-color;
 
   &__title {
     @extend .bold;

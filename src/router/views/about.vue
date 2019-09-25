@@ -12,8 +12,18 @@ export default {
 
 <template>
   <Layout yellow-card title="About">
-    <el-main>
-      About
-    </el-main>
+    <el-row>
+      <el-col :md="12">
+        <h2>Background</h2>
+        <p
+          >We are a group of Hong Kong protester who meetup through
+          telegram...</p
+        >
+      </el-col>
+      <el-col :md="12">
+        <h2>背景</h2>
+        <p>我們是一班在tg 認識的香港示威者...</p>
+      </el-col>
+    </el-row>
   </Layout>
 </template>

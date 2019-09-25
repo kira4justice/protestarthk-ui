@@ -15,51 +15,48 @@ export default {
 </script>
 
 <template>
-  <Layout show-brand>
-    <el-main>
-      <el-row :class="$style.art">
-        <el-col
-          class="hidden-xs-only"
-          :sm="{ span: 11 }"
-          :lg="{ span: 11, offset: 0 }"
-        >
-          <img :class="$style.image" :src="currentArt.fileUrl" />
-        </el-col>
-        <el-col :sm="{ span: 12, offset: 1 }" :lg="{ span: 11, offset: 2 }">
-          <div :class="$style.details">
-            <div :class="$style.title">{{ currentArt.name }}</div>
-            <div :class="$style.artist">By {{ currentArt.author }}</div>
-            <div :class="$style.label">Description</div>
-            <p :class="$style.desc">{{ currentArt.caption }}</p>
-            <div :class="$style.label">Tag</div>
-            <RouterLink
-              v-for="tag in currentArt.tags"
-              :key="tag.id"
-              :class="$style.tag"
-              :to="`/arts?tag=${tag.name}`"
-              >#{{ tag.name }}</RouterLink
-            >
-          </div>
-        </el-col>
-        <el-col class="hidden-sm-and-up">
-          <img :class="$style.image" :src="currentArt.fileUrl" />
-        </el-col>
-      </el-row>
-    </el-main>
+  <Layout black-card>
+    <el-row :class="$style.art">
+      <el-col :sm="{ span: 12 }" :lg="{ span: 11, offset: 0 }">
+        <img :class="$style.image" :src="currentArt.fileUrl" />
+      </el-col>
+      <a
+        href="/arts"
+        :class="['el-icon-close', $style.back]"
+        @click.stop.prevent="() => $router.back()"
+      ></a>
+      <el-col :sm="{ span: 11, offset: 1 }" :lg="{ span: 11, offset: 2 }">
+        <div :class="$style.details">
+          <div :class="$style.title">{{ currentArt.name }}</div>
+          <div :class="$style.artist">By {{ currentArt.author }}</div>
+          <div :class="$style.label">Description</div>
+          <p :class="$style.desc">{{ currentArt.caption }}</p>
+          <div :class="$style.label">Tag</div>
+          <RouterLink
+            v-for="tag in currentArt.tags"
+            :key="tag.id"
+            :class="$style.tag"
+            :to="`/arts?tag=${tag.name}`"
+            >#{{ tag.name }}</RouterLink
+          >
+        </div>
+      </el-col>
+    </el-row>
   </Layout>
 </template>
 
 <style lang="scss" module>
 @import '@design';
 
-.art {
-  @include mq(lg-and-up) {
-    padding-left: $side-menu-width;
-  }
-}
+// .art {
+//   @include mq(lg-and-up) {
+//     padding-left: $side-menu-width;
+//   }
+// }
 
 .image {
   width: 100%;
+  margin-top: -5em;
 }
 
 .details {
@@ -104,8 +101,6 @@ export default {
   display: inline-block;
   padding: 4px;
   margin-right: 4px;
-  // font-size: $--font-size-small;
-  // line-height: $--font-size-small;
   text-decoration: none;
   border: 1px solid white;
 
@@ -116,6 +111,26 @@ export default {
 
   &:last-child {
     margin: 0;
+  }
+}
+
+.back {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 2em;
+
+  &,
+  &:link,
+  &:hover,
+  &:active,
+  &:visited {
+    color: white;
+    text-decoration: none;
+  }
+
+  &:hover {
+    cursor: pointer;
   }
 }
 </style>

@@ -17,10 +17,10 @@ export default {
   },
   computed: {
     bgColor() {
-      return this.yellowBg ? design.colorPrimary : '#ffffff';
+      return this.yellowBg ? design.colorPrimary : design.colorBodyBg;
     },
     bgFontColor() {
-      return this.yellowBg ? '#ffffff' : design.colorText;
+      return this.yellowBg ? design.colorBodyBg : design.colorText;
     },
     defaultStyle() {
       return { background: this.bgColor, color: this.bgFontColor };
@@ -77,6 +77,7 @@ export default {
   min-height: 350px;
   padding: 2em;
   margin-top: 3em;
+  margin-bottom: 3em;
 
   > .title {
     padding-bottom: 0.25em;
