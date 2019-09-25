@@ -51,7 +51,7 @@ export default [
     // props: (route) => ({ art: store.state.arts.current || {} }),
   },
   {
-    path: '/arts/upload',
+    path: '/arts-submit',
     name: 'arts-submit',
     component: () => lazyLoadView(import('@views/arts-submit')),
   },
