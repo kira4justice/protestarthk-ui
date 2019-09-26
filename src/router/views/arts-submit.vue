@@ -1,5 +1,7 @@
 <script>
+import { pathOr } from 'ramda';
 import Layout from '@layouts/main';
+import { artsComputed, artsMethods } from '@state/helpers';
 
 export default {
   page: {
@@ -15,12 +17,34 @@ export default {
         caption: '',
         tags: [],
       },
+      file: null,
     };
   },
+  computed: {
+    ...artsComputed,
+  },
   methods: {
-    uploadSuccess() {},
-    submitForm() {
-      this.$refs.uploader.submit();
+    ...artsMethods,
+    uploaderOnChange(file, fileList) {
+      this.file = file;
+    },
+    uploaderOnRemove(file, fileList) {
+      this.file = null;
+    },
+    resetForm() {
+      this.$refs.form.resetFields();
+      this.$refs.uploader.clearFiles();
+      this.file = null;
+    },
+    async submitForm() {
+      const file = pathOr(null, ['file', 'raw'])(this);
+      if (file) {
+        const res = await this.uploadArt({
+          ...this.form,
+          file,
+        });
+        this.$router.push({ name: 'art-details', params: res });
+      }
     },
   },
 };
@@ -28,16 +52,16 @@ export default {
 
 <template>
   <Layout title="Upload" yellow-bg white-card>
-    <el-form :model="form" label-width="100px" label-position="left">
+    <el-form ref="form" :model="form" label-width="100px" label-position="left">
       <el-row>
         <el-col :md="12">
-          <el-form-item label="Title">
+          <el-form-item label="Title" prop="title">
             <el-input v-model="form.title" name="title"></el-input>
           </el-form-item>
-          <el-form-item label="Author">
+          <el-form-item label="Author" prop="author">
             <el-input v-model="form.author" name="author"></el-input>
           </el-form-item>
-          <el-form-item label="Caption">
+          <el-form-item label="Caption" prop="caption">
             <el-input
               v-model="form.caption"
               type="textarea"
@@ -45,7 +69,7 @@ export default {
               name="caption"
             ></el-input>
           </el-form-item>
-          <el-form-item label="Tags">
+          <el-form-item label="Tags" prop="tags">
             <el-select
               v-model="form.tags"
               name="tags"
@@ -54,6 +78,7 @@ export default {
               allow-create
               default-first-option
               no-data-text="Type your tags"
+              :style="{ width: '100%' }"
             >
               <!-- <el-option
                 v-for="item in options"
@@ -68,14 +93,16 @@ export default {
         <el-col :md="{ span: 10, offset: 2 }">
           <el-upload
             ref="uploader"
-            action="/api/upload"
+            action="/api/arts"
             name="art-file"
             :data="form"
             :auto-upload="false"
             accept="image/jpg, image/png"
             :limit="1"
-            :on-exceed="onExceed"
+            :on-change="uploaderOnChange"
+            :on-remove="uploaderOnRemove"
             drag
+            :style="{ width: '100%' }"
           >
             <i class="el-icon-upload"></i>
             <div class="el-upload__text"
@@ -88,7 +115,12 @@ export default {
           </el-upload>
         </el-col>
       </el-row>
-      <el-button type="primary" @click="submitForm">Submit</el-button>
+      <div class="right">
+        <el-button @click="resetForm">Reset</el-button>
+        <el-button type="primary" :loading="uploading" @click="submitForm"
+          >Submit</el-button
+        >
+      </div>
     </el-form>
   </Layout>
 </template>

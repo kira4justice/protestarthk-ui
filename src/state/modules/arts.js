@@ -8,11 +8,14 @@ const SET_ARTS = 'SET_ARTS';
 const APPEND_ARTS = 'APPEND_ARTS';
 const CLEAR_CURRENT = 'CLEAR_CURRENT';
 const SET_CURRENT = 'SET_CURRENT';
+const SET_UPLOADING = 'SET_UPLOADING';
+const CLEAR_UPLOADING = 'CLEAR_UPLOADING';
 
 const defaultData = () => ({
   arts: [],
   page: 0,
   current: {},
+  uploading: false,
 });
 
 export const state = defaultData();
@@ -36,6 +39,12 @@ export const mutations = {
   },
   [SET_CURRENT]: (state, art) => {
     state.current = art;
+  },
+  [SET_UPLOADING]: (state) => {
+    state.uploading = true;
+  },
+  [CLEAR_UPLOADING]: (state) => {
+    state.uploading = false;
   },
 };
 
@@ -69,5 +78,23 @@ export const actions = {
 
     commit(SET_CURRENT, ret);
     return ret;
+  },
+
+  async uploadArt({ commit }, payload) {
+    commit(SET_UPLOADING);
+
+    try {
+      const data = new FormData();
+      for (let key in payload) {
+        data.append(key, payload[key]);
+      }
+      const res = await axios.post('/api/arts', data);
+
+      commit(CLEAR_UPLOADING);
+      return res.data;
+    } catch (err) {
+      commit(CLEAR_UPLOADING);
+      console.error(err);
+    }
   },
 };

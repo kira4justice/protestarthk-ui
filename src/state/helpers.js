@@ -14,7 +14,8 @@ export const artsComputed = {
     arts: (state) => state.arts,
     currentPage: (state) => state.page,
     currentArt: (state) => state.current,
+    uploading: (state) => state.uploading,
   }),
 };
 
-export const artsMethods = mapActions('arts', ['init', 'searchArts']);
+export const artsMethods = mapActions('arts', ['searchArts', 'uploadArt']);

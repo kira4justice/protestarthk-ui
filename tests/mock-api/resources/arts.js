@@ -60,4 +60,27 @@ module.exports = {
     ret = ret.slice(page * pageSize, (page + 1) * pageSize);
     return ret;
   },
+  add: (params) => {
+    const { name, caption, author, tags } = params;
+    const id = all.length + 1;
+    const relatedId = id - 1;
+    const art = {
+      id,
+      name,
+      file_url: calcFile(id),
+      caption,
+      author,
+      tags: tags.map((d, i) => ({ id: i, name: d })),
+      related_art: [
+        {
+          id: relatedId,
+          name: `Protest Art ${relatedId}`,
+          thumbnail: calcFile(relatedId),
+          create_date: new Date(),
+        },
+      ],
+    };
+    all.push(art);
+    return { id };
+  },
 };
