@@ -10,12 +10,15 @@ const CLEAR_CURRENT = 'CLEAR_CURRENT';
 const SET_CURRENT = 'SET_CURRENT';
 const SET_UPLOADING = 'SET_UPLOADING';
 const CLEAR_UPLOADING = 'CLEAR_UPLOADING';
+const SET_FEATURED_ART = 'SET_FEATURED_ART';
+const CLEAR_FEATURED_ART = 'CLEAR_FEATURED_ART';
 
 const defaultData = () => ({
   arts: [],
-  page: 0,
-  current: {},
+  currentPage: 0,
+  currentArt: {},
   uploading: false,
+  featuredArt: null,
 });
 
 export const state = defaultData();
@@ -28,23 +31,29 @@ export const mutations = {
   },
   [SET_ARTS]: (state, newArts) => {
     state.arts = newArts;
-    state.page = 0;
+    state.currentPage = 0;
   },
   [APPEND_ARTS]: (state, newArts) => {
     state.arts = state.arts.concat(newArts);
-    if (newArts.length > 0) state.page++;
+    if (newArts.length > 0) state.currentPage++;
   },
   [CLEAR_CURRENT]: (state) => {
-    state.current = null;
+    state.currentArt = null;
   },
   [SET_CURRENT]: (state, art) => {
-    state.current = art;
+    state.currentArt = art;
   },
   [SET_UPLOADING]: (state) => {
     state.uploading = true;
   },
   [CLEAR_UPLOADING]: (state) => {
     state.uploading = false;
+  },
+  [SET_FEATURED_ART]: (state, art) => {
+    state.featuredArt = art || null;
+  },
+  [CLEAR_FEATURED_ART]: (state) => {
+    state.featuredArt = null;
   },
 };
 
@@ -96,5 +105,17 @@ export const actions = {
       commit(CLEAR_UPLOADING);
       console.error(err);
     }
+  },
+
+  async getFeatureArts({ commit }) {
+    const params = {
+      sortBy: 'created_at',
+      sortOrder: 'desc',
+      page: 0,
+      pageSize: 1,
+    };
+    const res = await axios.get('/api/arts', { params });
+    commit(SET_FEATURED_ART, res.data[0]);
+    return res;
   },
 };

@@ -13,7 +13,7 @@ const all = R.range(1, 100).map((id) => {
 
   return {
     id,
-    name: `Protest Art ${id}`,
+    title: `Protest Art ${id}`,
     file_url: calcFile(id),
     caption: `Description of protest art ${id}.`,
     author: `Artist ${id}`,
@@ -26,7 +26,7 @@ const all = R.range(1, 100).map((id) => {
     related_art: [
       {
         id: relatedId,
-        name: `Protest Art ${relatedId}`,
+        title: `Protest Art ${relatedId}`,
         thumbnail: calcFile(relatedId),
         create_date: new Date(),
       },
@@ -48,7 +48,7 @@ module.exports = {
     let ret = all;
     if (query) {
       const match = R.contains(query);
-      ret = ret.filter((d) => match(d.name) || match(d.caption));
+      ret = ret.filter((d) => match(d.title) || match(d.caption));
     }
     if (tags.length > 0) {
       const containTags = (record) =>
@@ -61,12 +61,12 @@ module.exports = {
     return ret;
   },
   add: (params) => {
-    const { name, caption, author, tags } = params;
+    const { title, caption, author, tags } = params;
     const id = all.length + 1;
     const relatedId = id - 1;
     const art = {
       id,
-      name,
+      title,
       file_url: calcFile(id),
       caption,
       author,
@@ -74,7 +74,7 @@ module.exports = {
       related_art: [
         {
           id: relatedId,
-          name: `Protest Art ${relatedId}`,
+          title: `Protest Art ${relatedId}`,
           thumbnail: calcFile(relatedId),
           create_date: new Date(),
         },

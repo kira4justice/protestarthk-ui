@@ -1,6 +1,7 @@
 <script>
 import appConfig from '@src/app.config';
 import Layout from '@layouts/home';
+import { homeComputed } from '@state/helpers';
 
 export default {
   page: {
@@ -8,6 +9,24 @@ export default {
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: { Layout },
+  computed: {
+    ...homeComputed,
+    featuredArtStyle() {
+      const url = (this.featuredArt || {}).file_url;
+      return {
+        position: 'absolute',
+        top: '100px',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        'z-index': -1,
+        'background-image': `url(${url})`,
+        'background-repeat': 'no-repeat',
+        'background-position': 'center',
+        'background-size': 'contain',
+      };
+    },
+  },
 };
 </script>
 
@@ -17,9 +36,13 @@ export default {
       <div :class="$style.title__1">Protest</div>
       <div :class="$style.title__2">Art</div>
 
-      <div :class="$style.caption">
-        <div :class="$style.caption__title">Featured Art of the Week</div>
-        <div :class="$style.caption__artist">Artist Name</div>
+      <RouterLink v-if="featuredArt" :to="`/arts/${featuredArt.id}`">
+        <div :class="$style.caption">
+          <div :class="$style.caption__title">Featured Art of the Week</div>
+          <div :class="$style.caption__artist">{{ featuredArt.author }}</div>
+        </div>
+      </RouterLink>
+      <div v-if="featuredArt" class="text-center" :style="featuredArtStyle">
       </div>
     </el-main>
   </Layout>

@@ -7,7 +7,13 @@ describe('@views/home', () => {
   });
 
   it('renders an element', () => {
-    const wrapper = shallowMountView(Home);
+    const wrapper = shallowMountView(Home, {
+      computed: {
+        featuredArt() {
+          return null;
+        },
+      },
+    });
     const element = wrapper.find('.no-padding');
     expect(element.exists()).toBe(true);
   });

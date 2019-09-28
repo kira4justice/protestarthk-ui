@@ -1,6 +1,6 @@
 <script>
 import Layout from '@layouts/main';
-import { artsComputed } from '@state/helpers';
+import { artDetailComputed } from '@state/helpers';
 
 export default {
   page: {
@@ -9,7 +9,7 @@ export default {
   },
   components: { Layout },
   computed: {
-    ...artsComputed,
+    ...artDetailComputed,
   },
 };
 </script>
@@ -27,7 +27,7 @@ export default {
       ></a>
       <el-col :sm="{ span: 11, offset: 1 }" :lg="{ span: 11, offset: 2 }">
         <div :class="$style.details">
-          <div :class="$style.title">{{ currentArt.name }}</div>
+          <div :class="$style.title">{{ currentArt.title }}</div>
           <div :class="$style.artist">By {{ currentArt.author }}</div>
           <div :class="$style.label">Description</div>
           <p :class="$style.desc">{{ currentArt.caption }}</p>

@@ -18,7 +18,7 @@ export default {
         { name: 'about', title: 'About' },
         { name: 'arts', title: 'Gallery' },
         { name: 'arts-submit', title: 'Submit' },
-        { name: 'contacts', title: 'Contact' },
+        // { name: 'contacts', title: 'Contact' },
       ],
     },
   },

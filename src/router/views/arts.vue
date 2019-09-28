@@ -13,13 +13,11 @@ export default {
   data: function() {
     return {
       query: this.$route.query.query,
-      selectedTag: this.$route.query.tag,
+      selectedTags: this.$route.query.tag,
+      sortBy: this.$route.query.sortBy || 'create_date',
+      sortOrder: this.$route.query.sortOrder || 'desc',
       loading: false,
-      tags: [
-        { name: 'Protest', value: 'protest' },
-        { name: 'Eye for HK', value: 'eye' },
-        { name: '831 Terrorist Attack', value: '831' },
-      ],
+      tags: [],
     };
   },
   computed: {
@@ -42,6 +40,7 @@ export default {
   },
   mounted() {
     window.addEventListener('scroll', this.onScroll);
+    this.$refs.tagFilter.focus();
   },
   destroyed() {
     window.removeEventListener('scroll', this.onScroll);
@@ -49,31 +48,29 @@ export default {
   methods: {
     ...artsMethods,
     querySuggestion(queryString, cb) {
-      const ret = [
-        { value: 'Option 1' },
-        { value: 'Option 2' },
-        { value: 'Option 3' },
-      ];
-      cb(ret);
+      // TODO: query suggestion tag
+      // const ret = [
+      //   { value: 'Option 1' },
+      //   { value: 'Option 2' },
+      //   { value: 'Option 3' },
+      // ];
+      // this.tags = ret;
     },
     doSearch() {
-      const req = { query: this.query, tag: this.selectedTag };
+      const req = { query: this.query, tag: this.selectedTags };
       this.$router.push({ name: 'arts', query: req });
-    },
-    selectTag(tag) {
-      this.selectedTag = tag;
-      this.doSearch();
     },
     async fetchNextPage() {
       if (!this.loading) {
         NProgress.start();
+        this.loading = true;
+
         const req = {
           query: this.query,
           tag: this.selectedTag,
           page: this.currentPage + 1,
         };
 
-        this.loading = true;
         await this.searchArts(req);
         this.loading = false;
         NProgress.done();
@@ -95,101 +92,65 @@ export default {
 
 <template>
   <Layout yellow-bg white-card title="Search">
-    <el-container>
-      <el-aside class="hidden-xs-only" :width="sizeMenuWidth">
-        <el-menu
-          :class="['no-border', $style.filter]"
-          :background-color="bgColor"
-        >
-          <div :class="$style['filter__group']">
-            <div :class="$style['filter__group__label']">Search</div>
-            <el-autocomplete
-              v-model="query"
-              name="query"
-              :class="$style['filter__group__item']"
-              prefix-icon="el-icon-search"
-              placeholder="Search by keywords or tags"
-              size="small"
-              autofocus
-              clearable
-              :fetch-suggestions="querySuggestion"
-              :trigger-on-focus="false"
-              :select-when-unmatched="true"
-              @select="doSearch"
-            ></el-autocomplete>
-          </div>
-          <div :class="$style['filter__group']">
-            <div :class="$style['filter__group__label']">Tags</div>
-            <div :class="$style['filter__group__item']">
-              <div :class="$style['filter__group']">
-                <div
-                  v-for="tag in tags"
-                  :key="tag.value"
-                  :class="$style['filter__group__item']"
-                >
-                  <a href="#" @click.stop.prevent="selectTag(tag.value)">
-                    {{ tag.name }}
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </el-menu>
-      </el-aside>
+    <div :class="$style.filterbar">
+      <el-row>
+        <el-col :sm="{ span: 14 }">
+          <el-select
+            ref="tagFilter"
+            v-model="selectedTags"
+            :class="$style['filterbar__item']"
+            size="small"
+            name="tags"
+            placeholder="type to search"
+            multiple
+            filterable
+            allow-create
+            default-first-option
+            :style="{ width: '100%' }"
+            remote
+            :remote-method="querySuggestion"
+            @change="doSearch"
+          >
+            <el-option
+              v-for="tag in tags"
+              :key="tag"
+              :label="tag"
+              :value="tag"
+            ></el-option>
+          </el-select>
+        </el-col>
+        <el-col :sm="{ span: 9, offset: 1 }">
+          <!--
+          <el-select
+            :class="$style['filterbar__item']"
+            size="small"
+          ></el-select>
+          -->
+        </el-col>
+      </el-row>
+    </div>
 
-      <el-main>
-        <masonry :cols="masonryCols" :gutter="masonryGutter">
-          <RouterLink v-for="art in arts" :key="art.id" :to="`/arts/${art.id}`">
-            <el-card :class="$style['art-item']" :body-style="{ padding: 0 }">
-              <img :src="art.fileUrl" />
-            </el-card>
-          </RouterLink>
-        </masonry>
-      </el-main>
-    </el-container>
+    <masonry :cols="masonryCols" :gutter="masonryGutter">
+      <RouterLink v-for="art in arts" :key="art.id" :to="`/arts/${art.id}`">
+        <el-card :class="$style['art-item']" :body-style="{ padding: 0 }">
+          <img :src="art.fileUrl" />
+        </el-card>
+      </RouterLink>
+    </masonry>
+
+    <div :class="['text-center', $style.loadingBar]">
+      <el-button type="primary" :loading="loading" @click="fetchNextPage"
+        >Load More</el-button
+      >
+    </div>
   </Layout>
 </template>
 
 <style lang="scss" module>
-.filter {
-  $padding-v: 2.5em;
-  $padding-h: 1.5em;
-  $padding-between: 0.5em;
-
-  &__group {
-    padding: $padding-v $padding-h 0;
-
-    &__label {
-      padding-bottom: $padding-between;
-      color: white;
-      text-transform: uppercase;
-    }
-
-    &__item {
-      width: 100%;
-      padding-bottom: $padding-between;
-
-      &:last-child {
-        padding-bottom: 0;
-      }
-    }
-
-    .filter {
-      &__group {
-        padding: 0 0 $padding-v $padding-h;
-
-        &__item {
-          > a {
-            color: white;
-            text-decoration: none;
-
-            &:hover {
-              text-decoration: underline;
-            }
-          }
-        }
-      }
-    }
+.filterbar {
+  &__item {
+    width: 100%;
+    margin-bottom: 0.5em;
   }
 }
 
@@ -202,5 +163,9 @@ export default {
       width: 100%;
     }
   }
+}
+
+.loadingBar {
+  margin-top: 1em;
 }
 </style>

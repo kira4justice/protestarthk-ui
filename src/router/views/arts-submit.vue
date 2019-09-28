@@ -1,7 +1,7 @@
 <script>
 import { pathOr } from 'ramda';
 import Layout from '@layouts/main';
-import { artsComputed, artsMethods } from '@state/helpers';
+import { artSubmitComputed, artSubmitMethods } from '@state/helpers';
 
 export default {
   page: {
@@ -21,10 +21,10 @@ export default {
     };
   },
   computed: {
-    ...artsComputed,
+    ...artSubmitComputed,
   },
   methods: {
-    ...artsMethods,
+    ...artSubmitMethods,
     uploaderOnChange(file, fileList) {
       this.file = file;
     },

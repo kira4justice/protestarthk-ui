@@ -5,6 +5,14 @@ export default [
     path: '/',
     name: 'home',
     component: () => lazyLoadView(import('@views/home')),
+    meta: {
+      beforeResolve(routeTo, routeFrom, next) {
+        store
+          .dispatch('arts/getFeatureArts')
+          .then(() => next())
+          .catch(() => next());
+      },
+    },
   },
   {
     path: '/about',

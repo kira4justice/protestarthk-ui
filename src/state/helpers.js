@@ -10,12 +10,21 @@ export const authComputed = {
 export const authMethods = mapActions('auth', ['logIn', 'logOut']);
 
 export const artsComputed = {
-  ...mapState('arts', {
-    arts: (state) => state.arts,
-    currentPage: (state) => state.page,
-    currentArt: (state) => state.current,
-    uploading: (state) => state.uploading,
-  }),
+  ...mapState('arts', ['arts', 'currentPage']),
 };
 
-export const artsMethods = mapActions('arts', ['searchArts', 'uploadArt']);
+export const artsMethods = mapActions('arts', ['searchArts']);
+
+export const artDetailComputed = {
+  ...mapState('arts', ['currentArt']),
+};
+
+export const artSubmitComputed = {
+  ...mapState('arts', ['uploading']),
+};
+
+export const artSubmitMethods = mapActions('arts', ['uploadArt']);
+
+export const homeComputed = {
+  ...mapState('arts', ['featuredArt']),
+};
