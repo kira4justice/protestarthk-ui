@@ -23,4 +23,10 @@ module.exports = (app) => {
     const ret = { id };
     res.json(ret);
   });
+
+  app.post('/api/arts/upload', (req, res) => {
+    const id = Math.floor(Math.random() * Arts.all.length) + 1;
+    const file = Arts.all[id].file_url;
+    res.json({ file });
+  });
 };

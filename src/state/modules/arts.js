@@ -2,6 +2,7 @@ import { mergeState } from '@utils/store-utils';
 import { camelizeKeys } from 'humps';
 import { propOr } from 'ramda';
 import axios from 'axios';
+import * as qs from 'qs';
 
 const INIT_ARTS = 'INIT_ARTS';
 const SET_ARTS = 'SET_ARTS';
@@ -93,14 +94,24 @@ export const actions = {
     commit(SET_UPLOADING);
 
     try {
-      const data = new FormData();
-      for (let key in payload) {
-        data.append(key, payload[key]);
+      const { file, ...data } = payload;
+      const uploadForm = new FormData();
+      uploadForm.append('file', file);
+      const uploadRes = await axios.post('/api/arts/upload', uploadForm);
+
+      const createForm = new FormData();
+      const fileUrl = uploadRes.data.file;
+      createForm.append('file', fileUrl);
+      for (let key in data) {
+        createForm.append(key, data[key]);
       }
-      const res = await axios.post('/api/arts', data);
+      const createRes = await axios.post(
+        '/api/arts',
+        qs.stringify({ ...data, file: fileUrl }, { arrayFormat: 'brackets' })
+      );
 
       commit(CLEAR_UPLOADING);
-      return res.data;
+      return createRes.data;
     } catch (err) {
       commit(CLEAR_UPLOADING);
       console.error(err);
