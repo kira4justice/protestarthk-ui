@@ -3,6 +3,7 @@ import Layout from '@layouts/main';
 import design from '@design';
 import { artsComputed, artsMethods } from '@state/helpers';
 import NProgress from 'nprogress/nprogress';
+import { flatten, identity } from 'ramda';
 
 export default {
   page: {
@@ -11,9 +12,10 @@ export default {
   },
   components: { Layout },
   data: function() {
+    const tagsAry = flatten([this.$route.query.tag]).filter(identity);
     return {
       query: this.$route.query.query,
-      selectedTags: this.$route.query.tag,
+      selectedTags: tagsAry,
       sortBy: this.$route.query.sortBy || 'create_date',
       sortOrder: this.$route.query.sortOrder || 'desc',
       loading: false,
@@ -67,7 +69,7 @@ export default {
 
         const req = {
           query: this.query,
-          tag: this.selectedTag,
+          tag: this.selectedTags,
           page: this.currentPage + 1,
         };
 
