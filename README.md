@@ -29,14 +29,14 @@ yarn dev --open
 yarn dev:e2e
 ```
 
-By default, dev and tests filter requests through the [mock API](./docs/tests.md#the-mock-api) in `tests/mock-api`. To test directly against a local/live API instead, run dev and test commands with the `API_BASE_URL` environment variable set. For example:
+By default, dev and tests filter requests through the [mock API](./docs/tests.md#the-mock-api) in `tests/mock-api`. To test directly against a local/live API instead, run dev and test commands with the `VUE_APP_API_URL` environment variable set. For example:
 
 ```bash
 # To develop against a local backend server
-API_BASE_URL=http://localhost:3000 yarn dev
+VUE_APP_API_URL=http://localhost:3000 yarn dev
 
 # To test and develop against a production server
-API_BASE_URL=https://example.io yarn dev:e2e
+VUE_APP_API_URL=https://example.io yarn dev:e2e
 ```
 
 ## Production Build

@@ -3,6 +3,7 @@ import { camelizeKeys } from 'humps';
 import { propOr } from 'ramda';
 import axios from 'axios';
 import * as qs from 'qs';
+import apiPath from '@utils/api-path';
 
 const INIT_ARTS = 'INIT_ARTS';
 const SET_ARTS = 'SET_ARTS';
@@ -69,7 +70,7 @@ export const actions = {
     tags = tags instanceof Array ? tags : [tags];
 
     const params = { tags, query, page };
-    const res = await axios.get('/api/arts', { params });
+    const res = await axios.get(apiPath('/arts'), { params });
     const ret = camelizeKeys(res.data);
 
     if (page === 0) {
@@ -83,7 +84,7 @@ export const actions = {
   async fetchArtDetails({ commit }, id) {
     commit(CLEAR_CURRENT);
 
-    const res = await axios.get(`/api/arts/${id}`);
+    const res = await axios.get(apiPath(`/arts/${id}`));
     const ret = camelizeKeys(res.data);
 
     commit(SET_CURRENT, ret);
@@ -97,7 +98,7 @@ export const actions = {
       const { file, ...data } = payload;
       const uploadForm = new FormData();
       uploadForm.append('file', file);
-      const uploadRes = await axios.post('/api/arts/upload', uploadForm);
+      const uploadRes = await axios.post(apiPath('/arts/upload'), uploadForm);
 
       const createForm = new FormData();
       const fileUrl = uploadRes.data.file;
@@ -106,7 +107,7 @@ export const actions = {
         createForm.append(key, data[key]);
       }
       const createRes = await axios.post(
-        '/api/arts',
+        apiPath('/arts'),
         qs.stringify({ ...data, file: fileUrl }, { arrayFormat: 'brackets' })
       );
 
@@ -125,7 +126,7 @@ export const actions = {
       page: 0,
       pageSize: 1,
     };
-    const res = await axios.get('/api/arts', { params });
+    const res = await axios.get(apiPath('/arts'), { params });
     commit(SET_FEATURED_ART, res.data[0]);
     return res;
   },
