@@ -1,3 +1,4 @@
+import apiGateway from '@utils/api-gateway';
 import * as usersModule from './users';
 
 describe('@state/modules/users', () => {
@@ -16,14 +17,13 @@ describe('@state/modules/users', () => {
     it('actions.fetchUser returns the current user without fetching it again', () => {
       expect.assertions(2);
 
-      const axios = require('axios');
-      const originalAxiosGet = axios.get;
-      axios.get = jest.fn();
+      const originalAxiosGet = apiGateway.get;
+      apiGateway.get = jest.fn();
 
       return store.dispatch('fetchUser', { username: 'admin' }).then((user) => {
         expect(user).toEqual(validUserExample);
-        expect(axios.get).not.toHaveBeenCalled();
-        axios.get = originalAxiosGet;
+        expect(apiGateway.get).not.toHaveBeenCalled();
+        apiGateway.get = originalAxiosGet;
       });
     });
 

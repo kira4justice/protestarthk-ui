@@ -1,9 +1,7 @@
-import { mergeState } from '@utils/store-utils';
-import { camelizeKeys } from 'humps';
 import { propOr } from 'ramda';
-import axios from 'axios';
 import * as qs from 'qs';
-import apiPath from '@utils/api-path';
+import { mergeState } from '@utils/store-utils';
+import apiGateway from '@utils/api-gateway';
 
 const INIT_ARTS = 'INIT_ARTS';
 const SET_ARTS = 'SET_ARTS';
@@ -70,8 +68,8 @@ export const actions = {
     tags = tags instanceof Array ? tags : [tags];
 
     const params = { tags, query, page };
-    const res = await axios.get(apiPath('/arts'), { params });
-    const ret = camelizeKeys(res.data);
+    const res = await apiGateway.get('/arts', { params });
+    const ret = res.data;
 
     if (page === 0) {
       commit(SET_ARTS, ret);
@@ -84,8 +82,8 @@ export const actions = {
   async fetchArtDetails({ commit }, id) {
     commit(CLEAR_CURRENT);
 
-    const res = await axios.get(apiPath(`/arts/${id}`));
-    const ret = camelizeKeys(res.data);
+    const res = await apiGateway.get(`/arts/${id}`);
+    const ret = res.data;
 
     commit(SET_CURRENT, ret);
     return ret;
@@ -98,16 +96,11 @@ export const actions = {
       const { file, ...data } = payload;
       const uploadForm = new FormData();
       uploadForm.append('file', file);
-      const uploadRes = await axios.post(apiPath('/arts/upload'), uploadForm);
+      const uploadRes = await apiGateway.post('/arts/upload', uploadForm);
 
-      const createForm = new FormData();
       const fileUrl = uploadRes.data.file;
-      createForm.append('file', fileUrl);
-      for (let key in data) {
-        createForm.append(key, data[key]);
-      }
-      const createRes = await axios.post(
-        apiPath('/arts'),
+      const createRes = await apiGateway.post(
+        '/arts',
         qs.stringify({ ...data, file: fileUrl }, { arrayFormat: 'brackets' })
       );
 
@@ -126,7 +119,7 @@ export const actions = {
       page: 0,
       pageSize: 1,
     };
-    const res = await axios.get(apiPath('/arts'), { params });
+    const res = await apiGateway.get('/arts', { params });
     commit(SET_FEATURED_ART, res.data[0]);
     return res;
   },

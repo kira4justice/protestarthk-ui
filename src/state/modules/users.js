@@ -1,5 +1,4 @@
-import axios from 'axios';
-import apiPath from '@utils/api-path';
+import apiGateway from '@utils/api-gateway';
 
 export const state = {
   cached: [],
@@ -29,7 +28,7 @@ export const actions = {
 
     // 3. Fetch the user from the API and cache it in case
     //    we need it again in the future.
-    return axios.get(apiPath(`/users/${username}`)).then((response) => {
+    return apiGateway.get(`/users/${username}`).then((response) => {
       const user = response.data;
       commit('CACHE_USER', user);
       return user;

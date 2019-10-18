@@ -12,7 +12,7 @@ export default {
   computed: {
     ...homeComputed,
     featuredArtStyle() {
-      const url = (this.featuredArt || {}).file_url;
+      const url = (this.featuredArt || {}).fileUrl;
       return {
         position: 'absolute',
         top: '100px',
