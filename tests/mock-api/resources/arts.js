@@ -14,7 +14,7 @@ const all = R.range(1, 100).map((id) => {
   return {
     id,
     title: `Protest Art ${id}`,
-    file_url: calcFile(id),
+    file: calcFile(id),
     caption: `Description of protest art ${id}.`,
     author: `Artist ${id}`,
     tags: shuffle([
@@ -67,7 +67,7 @@ module.exports = {
     const art = {
       id,
       title,
-      file_url: calcFile(id),
+      file: calcFile(id),
       caption,
       author,
       tags: tags.map((d, i) => ({ id: i, name: d })),
