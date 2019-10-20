@@ -18,7 +18,7 @@ export default {
   <Layout black-card>
     <el-row :class="$style.art">
       <el-col :sm="{ span: 12 }" :lg="{ span: 11, offset: 0 }">
-        <img :class="$style.image" :src="currentArt.fileUrl" />
+        <img :class="$style.image" :src="currentArt.file" />
       </el-col>
       <a
         href="/arts"
