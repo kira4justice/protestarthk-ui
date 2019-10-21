@@ -2,6 +2,7 @@ import { propOr } from 'ramda';
 import * as qs from 'qs';
 import { mergeState } from '@utils/store-utils';
 import apiGateway from '@utils/api-gateway';
+import imgUrl from '@utils/img-url';
 
 const INIT_ARTS = 'INIT_ARTS';
 const SET_ARTS = 'SET_ARTS';
@@ -20,6 +21,11 @@ const defaultData = () => ({
   uploading: false,
   featuredArt: null,
 });
+
+const artFromApi = (art) => {
+  art.file = imgUrl(art.file);
+  return art;
+};
 
 export const state = defaultData();
 
@@ -69,7 +75,7 @@ export const actions = {
 
     const params = { tags, query, page };
     const res = await apiGateway.get('/arts', { params });
-    const ret = res.data;
+    const ret = res.data.map(artFromApi);
 
     if (page === 0) {
       commit(SET_ARTS, ret);
@@ -83,7 +89,7 @@ export const actions = {
     commit(CLEAR_CURRENT);
 
     const res = await apiGateway.get(`/arts/${id}`);
-    const ret = res.data;
+    const ret = artFromApi(res.data);
 
     commit(SET_CURRENT, ret);
     return ret;
@@ -120,7 +126,8 @@ export const actions = {
       pageSize: 1,
     };
     const res = await apiGateway.get('/arts', { params });
-    commit(SET_FEATURED_ART, res.data[0]);
+    const ret = res.data.map(artFromApi);
+    commit(SET_FEATURED_ART, ret[0]);
     return res;
   },
 };
